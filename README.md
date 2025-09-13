@@ -59,3 +59,23 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Cambios realizados el dia 13/09/25
+Se creo una base de datos de datos des Mysql usando Xampp, se creo un usario y se conecto al proyecto de laravel desde el archivo .env
+Luego se uso el siguiente comando desde la terminal "php artisan migrat" para crear las tablas en la base de datos
+
+
+Se cambio el idioma a español usando los siguientes comando en la terminal y posteriormente confirmando el cambio en el archivo .env en app_locale
+
+*composer require laravel-lang/common*
+
+*php artisan lang:add <locale>*
+
+Para cambiar la zona horaria usamos el UTC que se ubica en la carpeta cofig->app.php y buscamos el timezone y lo sustituimos por "America/Merida"
+
+
+Para añadir la función de foto de perfil en nuestro proyecto igualmente nos ubicamos en la carpeta config/jetstream.php y des comentamos la siguiente línea para activarlo.
+Luego modificamos en el archivo .env en donde dice filesystem_disk y ponemos en public para que tenga un acceso directo
+
+Al cambiar la foto de perfil en el proyecto se crea una carpeta en donde se guarda la imagen que se insertara.
