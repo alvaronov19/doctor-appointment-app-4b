@@ -79,3 +79,10 @@ Para añadir la función de foto de perfil en nuestro proyecto igualmente nos ub
 Luego modificamos en el archivo .env en donde dice filesystem_disk y ponemos en public para que tenga un acceso directo
 
 Al cambiar la foto de perfil en el proyecto se crea una carpeta en donde se guarda la imagen que se insertara.
+
+## Cambios realizados el dia 21/09/25
+
+Se realizo varios cambios en la practica primeramente php artisan make:component AdminLayout
+Posterior a esto se crearon varios archivos y se mdificaron, en esta practica nos enfocamos en el diseño de la interfaz, se realizaron cambios al ingresar al localhost asi como se modifico el despligue de la foto de perfil como el logo de las citas medicas
+Se crearon archivos como dashboard.blade, caparta includes que contiene la carpeta admin con navigation y sider bar que se modificaron para el diseño del Laravel
+Se uso el código de etraido del flowbait para irlo modificando anuestro gusto
