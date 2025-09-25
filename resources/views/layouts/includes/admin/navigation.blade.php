@@ -9,8 +9,8 @@
                     </svg>
                 </button>
                 <a href="/" class="flex ms-2 md:me-24">
-                    <img src="{{ asset('images/LogoCita.png') }}" class="h-8 me-3" alt="Logo Cita" />
-                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Citas Médicas</span>
+                    <img src="{{ asset('images/LogoMediMatch.png') }}" class="h-8 me-3" alt="Logo Cita" />
+                    <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">MediMatch</span>
                 </a>
             </div>
             <div class="flex items-center">
