@@ -1,3 +1,6 @@
+@props(['breadcrumbs' => []])
+
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -15,6 +18,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://kit.fontawesome.com/f04a2d4b08.js" crossorigin="anonymous"></script>
 
+        <!-- WireUI -->
         <wireui:scripts />
 
         <!-- Styles -->
@@ -27,9 +31,10 @@
 
         <div class="p-4 sm:ml-64">
             <!-- Margin top 14 px-->
-            <div class="mt-14">
-                {{$slot}}
+            <div class="mt-14 flex items-center justify-between w-full">
+                @include('layouts.includes.admin.breadcrumb')
             </div>
+            {{$slot}}
         </div>
 
         @stack('modals')
