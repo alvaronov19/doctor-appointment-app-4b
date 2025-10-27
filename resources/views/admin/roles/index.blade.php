@@ -1,16 +1,18 @@
-<x-admin-layout>
-    title= "Roles | MediMatch"
+<x-admin-layout 
+    title="Roles | MediMatch"
     :breadcrumbs="[
         [
-            'name' => 'Dashboard'
-            'route' => ('admin.dashboard'),
+            'name' => 'Dashboard',
+            'route' => route('admin.dashboard'),
         ],
         [
             'name' => 'Roles',
+            'route' => route('admin.roles.index'),
         ],
-        
-    ]"
+        [
+            'name' => 'Nuevo',
+        ],
+    ]">
 
-
-
-<x-admin-layout>
+    @livewire('admin.datatables.role-table')
+</x-admin-layout>
