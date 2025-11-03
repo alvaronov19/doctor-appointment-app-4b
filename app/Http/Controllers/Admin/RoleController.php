@@ -44,8 +44,9 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('admin.roles.edit');
     }
+
 
     /**
      * Update the specified resource in storage.

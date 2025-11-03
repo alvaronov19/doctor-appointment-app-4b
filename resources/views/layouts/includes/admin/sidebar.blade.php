@@ -16,29 +16,7 @@ $links = [
         'href' => route('admin.roles.index'),
         'active' => request()->routeIs('admin.roles.*'),
 ],
-[
-        'name' => 'Dashboard',
-        'icon' => 'fa-solid fa-gauge',
-        'href' => route('admin.dashboard'),
-        'active' => false,
-        'submenu' => [
-            [
-                'name' => 'Ian master',
-                'href'=> '#',
-                'active' => false,
-            ],
-            [
-                'name' => 'Billing',
-                'href'=> '#',
-                'active' => false,
-            ],
-            [
-                'name' => 'Invoice',
-                'href'=> '#',
-                'active' => false,
-            ],
-    ],
-]
+
 ];
 
 @endphp
