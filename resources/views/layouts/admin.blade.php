@@ -32,12 +32,13 @@
         @include('layouts.includes.admin.sidebar')
 
         <div class="p-4 sm:ml-64">
-            <!-- Margin top 14 px-->
             <div class="mt-14 flex items-center justify-between w-full">
                 @include('layouts.includes.admin.breadcrumb')
+                {{ $action ?? '' }}
             </div>
-            {{$slot}}
-        </div>
+
+    {{$slot}}
+</div>
 
         @stack('modals')
 
