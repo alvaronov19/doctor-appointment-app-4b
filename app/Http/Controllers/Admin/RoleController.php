@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -28,7 +29,25 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Validación
+        $request->validate(['name' => 'required|unique:roles,name',]); 
+        
+        //Si pasa se creara el rol
+        Role::create([
+            'name' => $request->name,
+            'guard_name' => 'web'
+        ]);
+
+        //Variable de un solo uso
+        session()->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Rol creado correctamente',
+            'text' => 'El rol se ha creado correctamente.',
+        ]);
+
+        //Redireccionar a la tabla
+        return redirect()->route('admin.roles.index')->with('success', 'Rol creado exitosamente.');
+
     }
 
     /**

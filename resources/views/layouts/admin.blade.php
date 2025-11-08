@@ -1,3 +1,4 @@
+
 @props([
     'title' => config ('app.name, Laravel'),
     'breadcrumbs' => []])
@@ -20,13 +21,20 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <script src="https://kit.fontawesome.com/f04a2d4b08.js" crossorigin="anonymous"></script>
 
+         <!-- Sweet Alert -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         <!-- WireUI -->
         <wireui:scripts />
 
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased bg-gray-50">
+    <body class="font-sans antialiased bg-gray-50"
+    @if (session()->has('swal'))
+        data-swal="@json(session('swal'))"
+    @endif
+>
         @include('layouts.includes.admin.navigation')
 
         @include('layouts.includes.admin.sidebar')
@@ -44,5 +52,12 @@
 
         @livewireScripts
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+        <!-- Mostrar Sweet Alert -->
+        @if(@session()->has('swal'))
+        <script>
+            Swal.fire({!! json_encode(session('swal')) !!});
+        </script>
+@endif
     </body>
 </html>
