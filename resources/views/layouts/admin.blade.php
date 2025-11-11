@@ -58,6 +58,37 @@
         <script>
             Swal.fire({!! json_encode(session('swal')) !!});
         </script>
-@endif
+        @endif
+
+        <script>
+    //Buscar todos los elementos de una clase
+    const forms = document.querySelectorAll('.delete-form'); // Asegúrate que la clase sea '.delate-form' y no '.delete-form'
+    
+    // El método es forEach (con 'E' mayúscula)
+    forms.forEach(form => {
+        //Se pone al pendiente
+        form.addEventListener('submit', function(e) {
+            //Evita que se envíe el formulario inmediatamente
+            e.preventDefault();
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Usamos form.submit() en lugar de this.submit()
+                    // para asegurar que nos referimos al formulario correcto.
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
     </body>
 </html>
