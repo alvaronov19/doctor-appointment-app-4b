@@ -41,14 +41,19 @@ class UserController extends Controller
             'address' => 'required|string|min:3|max:255',
             'role_id' => 'required|exists:roles,id',
         ]);
-
         $user = User::create($data);
-        $user->roles()->attach($data['role_id']);
+        $user->update($data);
+
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }
+        $user->roles()->sync($data['role_id']);
 
         session () ->flash('swal', [
             'icon' => 'success',
-            'title' => 'Usuario creado correctamente',
-            'text' => 'El usuario se ha creado correctamente.',
+            'title' => 'Usuario actualizado correctamente',
+            'text' => 'El usuario se ha actualizado correctamente.',
         ]);
 
         return redirect()->route('admin.users.index')->with ('success', 'Usuario creado exitosamente.');
@@ -67,16 +72,36 @@ class UserController extends Controller
      */
     public function edit(User $user) 
     {
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
         
-        return view('admin.users.edit', compact('user'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user) 
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'email' => 'required|string|email|unique:users,email,' . $user->id,
+            'password' => 'required|string|min:8|confirmed',
+            'id_number' => 'required|string|min:5|max:20|regex:/^[A-Za-z0-9\-]+$/|unique:users,id_number,' . $user->id,
+            'phone' => 'required|digits_between:7,15',
+            'address' => 'required|string|min:3|max:255',
+            'role_id' => 'required|exists:roles,id',
+        ]);
+        $user->update($data);
+        $user->roles()->attach($data['role_id']);
+
+        session () ->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Usuario creado correctamente',
+            'text' => 'El usuario se ha creado correctamente.',
+        ]);
+
+        return redirect()->route('admin.users.edit')->with ('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
