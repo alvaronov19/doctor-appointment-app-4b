@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -101,7 +102,7 @@ class UserController extends Controller
             'text' => 'El usuario se ha creado correctamente.',
         ]);
 
-        return redirect()->route('admin.users.edit')->with ('success', 'Usuario actualizado exitosamente.');
+        return redirect()->route('admin.users.edit', $user->id)->with ('success', 'Usuario actualizado exitosamente.');
     }
 
     /**
@@ -109,6 +110,26 @@ class UserController extends Controller
      */
     public function destroy(User $user) 
     {
-        // 
+        if (Auth::id() == $user->id) {
+            session()->flash('swal', [
+                'icon' => 'error',
+                'title' => 'Error al eliminar usuario',
+                'text' => 'No puedes eliminar tu propia cuenta.',
+            ]);
+            abort(403, 'No puedes eliminar tu propia cuenta.');
+        }
+        
+        //Eliminar roles realacionados a usuario
+        $user->roles()->detach();
+
+        $user->delete();
+
+        session () ->flash('swal', [
+            'icon' => 'success',
+            'title' => 'Usuario eliminado correctamente',
+            'text' => 'El usuario se ha eliminado correctamente.',
+        ]);
+
+        return redirect()->route('admin.users.index')->with ('success', 'Usuario eliminado exitosamente.');
     }
 }
