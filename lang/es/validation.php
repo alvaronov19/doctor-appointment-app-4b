@@ -292,5 +292,6 @@ return [
         'emergency_contact_name'   => 'nombre del contacto de emergencia',
         'emergency_contact_phone'  => 'teléfono del contacto de emergencia',
         'emergency_contact_relationship' => 'relación con el contacto de emergencia',
+        'professional_license'       => 'cédula profesional',
     ],
 ];

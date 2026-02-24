@@ -42,28 +42,43 @@ class UserController extends Controller
             'address' => 'required|string|min:3|max:255',
             'role_id' => 'required|exists:roles,id',
         ]);
+
+      
+        $data['password'] = bcrypt($data['password']);
+
+  
         $user = User::create($data);
-        $user->update($data);
 
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
-            $user->save();
-        }
-        $user->roles()->sync($data['role_id']);
+        $user->roles()->sync([$data['role_id']]);
 
-        session () ->flash('swal', [
+      
+        session()->flash('swal', [
             'icon' => 'success',
-            'title' => 'Usuario actualizado correctamente',
-            'text' => 'El usuario se ha actualizado correctamente.',
+            'title' => 'Usuario creado correctamente',
+            'text' => 'El usuario se ha registrado en el sistema.',
         ]);
 
-        //Si el usuario creado es un paciente crear su registro en la tabla patients
-        if ($user::role('Paciente')) {
-            $patient = $user->patient()->create([]);
-            return redirect()->route('admin.patients.edit', $patient);
+        // Si es Doctor
+        if ($user->hasRole('Doctor')) { 
+            $doctor = \App\Models\Doctor::create([
+                'user_id' => $user->id
+            ]);
+            return redirect()->route('admin.doctors.edit', $doctor)
+                ->with('success', 'Complete la información médica del doctor.');
         }
 
-        return redirect()->route('admin.users.index')->with ('success', 'Usuario creado exitosamente.');
+        // Si es Paciente
+        if ($user->hasRole('Paciente')) { 
+            $patient = \App\Models\Patient::create([
+                'user_id' => $user->id
+            ]);
+            return redirect()->route('admin.patients.edit', $patient)
+                ->with('success', 'Complete los antecedentes del paciente.');
+        }
+
+        // Si es un Administrador, Recepcionista, etc. (No necesita perfil extra)
+        return redirect()->route('admin.users.index')
+            ->with('success', 'Usuario administrativo creado exitosamente.');
     }
 
 
